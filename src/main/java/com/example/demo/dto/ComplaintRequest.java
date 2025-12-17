@@ -1,5 +1,7 @@
 public class CoplaintRequest {
+    
     private String title;
     private String description;
-    private 
+    private String category;
+    private Long userid; 
 }
