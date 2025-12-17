@@ -2,7 +2,7 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
-public class User {
+public class Complaint {
     private Long id;
     private String title;
     private String description;

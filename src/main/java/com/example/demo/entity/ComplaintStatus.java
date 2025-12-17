@@ -2,9 +2,9 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
-public class User {
+public class ComplaintStatus {
     private Long id;
-    private String status;
     private LocalDateTime SubmittedOn;
+    private String status;
     private  ManyToOne User complaint;
 }
