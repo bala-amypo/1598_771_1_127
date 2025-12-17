@@ -5,5 +5,9 @@ import java.time.LocalDateTime;
 public class User {
     private Long id;
     private String title;
-    private String description
+    private String description;
+    private String category;
+    private Integer priorityScore;
+    private LocalDateTime SubmittedOn;
+    private 
 }
