@@ -1,12 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponse;
 import com.example.demo.entity.User;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.exception.UnauthorizedException;
 import com.example.demo.service.UserService;
-import com.example.demo.security.JwtUtil;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,17 +10,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
 
-    // Constructor Injection (MANDATORY)
-    public AuthController(
-            UserService userService,
-            PasswordEncoder passwordEncoder,
-            JwtUtil jwtUtil) {
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
     }
 
     /**
@@ -32,8 +20,6 @@ public class AuthController {
      */
     @PostMapping("/register")
     public User register(@RequestBody User user) {
-        // password hashing handled in service or here depending on your design
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userService.saveUser(user);
     }
 
@@ -41,23 +27,15 @@ public class AuthController {
      * POST /auth/login
      */
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest request) {
+    public User login(@RequestParam String email,
+                      @RequestParam String password) {
 
-        User user = userService.findByEmail(request.getEmail());
-        if (user == null) {
-            throw new ResourceNotFoundException("User not found");
+        User user = userService.findByEmail(email);
+
+        if (user == null || !user.getPassword().equals(password)) {
+            throw new UnauthorizedException("Invalid credentials");
         }
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new ResourceNotFoundException("User not found");
-        }
-
-        String token = jwtUtil.generateToken(user.getEmail());
-
-        return new AuthResponse(
-                token,
-                user.getId(),
-                user.getEmail()
-        );
+        return user;
     }
 }
