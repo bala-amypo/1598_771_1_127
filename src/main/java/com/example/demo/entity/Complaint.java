@@ -1,39 +1,78 @@
-public String getTitle() {
-    return title;
-}
+package com.example.demo.entity;
 
-public void setTitle(String title) {
-    this.title = title;
-}
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-public String getDescription() {
-    return description;
-}
+@Entity
+public class Complaint {
 
-public void setDescription(String description) {
-    this.description = description;
-}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-public String getCategory() {
-    return category;
-}
+    private String title;
+    private String description;
+    private String category;
 
-public void setCategory(String category) {
-    this.category = category;
-}
+    private Integer priorityScore;
 
-public User getUser() {
-    return user;
-}
+    private LocalDateTime submittedOn;
 
-public void setUser(User user) {
-    this.user = user;
-}
+    @ManyToOne
+    private User user;
 
-public Integer getPriorityScore() {
-    return priorityScore;
-}
+    @PrePersist
+    public void onCreate() {
+        this.submittedOn = LocalDateTime.now();
+    }
 
-public void setPriorityScore(Integer priorityScore) {
-    this.priorityScore = priorityScore;
+    // ===== GETTERS & SETTERS =====
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getPriorityScore() {
+        return priorityScore;
+    }
+
+    public void setPriorityScore(Integer priorityScore) {
+        this.priorityScore = priorityScore;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LocalDateTime getSubmittedOn() {
+        return submittedOn;
+    }
 }

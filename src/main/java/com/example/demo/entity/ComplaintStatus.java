@@ -18,9 +18,33 @@ public class ComplaintStatus {
     private LocalDateTime updatedOn;
 
     @PrePersist
-    public void onUpdate() {
+    public void onCreate() {
         this.updatedOn = LocalDateTime.now();
     }
 
-    // getters and setters
+    // ===== GETTERS & SETTERS =====
+
+    public Long getId() {
+        return id;
+    }
+
+    public Complaint getComplaint() {
+        return complaint;
+    }
+
+    public void setComplaint(Complaint complaint) {
+        this.complaint = complaint;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
+    }
 }

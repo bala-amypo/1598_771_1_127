@@ -15,5 +15,33 @@ public class PriorityRule {
 
     private String description;
 
-    // getters and setters
+    // ===== GETTERS & SETTERS =====
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getBaseScore() {
+        return baseScore;
+    }
+
+    public void setBaseScore(Integer baseScore) {
+        this.baseScore = baseScore;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
