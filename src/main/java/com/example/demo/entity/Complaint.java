@@ -1,30 +1,39 @@
-package com.example.demo.entity;
+public String getTitle() {
+    return title;
+}
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+public void setTitle(String title) {
+    this.title = title;
+}
 
-@Entity
-public class Complaint {
+public String getDescription() {
+    return description;
+}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public void setDescription(String description) {
+    this.description = description;
+}
 
-    private String title;
-    private String description;
-    private String category;
+public String getCategory() {
+    return category;
+}
 
-    private Integer priorityScore;
+public void setCategory(String category) {
+    this.category = category;
+}
 
-    private LocalDateTime submittedOn;
+public User getUser() {
+    return user;
+}
 
-    @ManyToOne
-    private User user;
+public void setUser(User user) {
+    this.user = user;
+}
 
-    @PrePersist
-    public void onCreate() {
-        this.submittedOn = LocalDateTime.now();
-    }
+public Integer getPriorityScore() {
+    return priorityScore;
+}
 
-    // getters and setters
+public void setPriorityScore(Integer priorityScore) {
+    this.priorityScore = priorityScore;
 }
