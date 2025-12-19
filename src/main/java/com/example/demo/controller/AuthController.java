@@ -1,41 +1,10 @@
-package com.example.demo.controller;
+package com.example.demo.service;
 
 import com.example.demo.entity.User;
-import com.example.demo.exception.UnauthorizedException;
-import com.example.demo.service.UserService;
-import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/auth")
-public class AuthController {
+public interface UserService {
 
-    private final UserService userService;
+    User findByEmail(String email);
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
-
-    /**
-     * POST /auth/register
-     */
-    @PostMapping("/register")
-    public User register(@RequestBody User user) {
-userService.save(user);
-    }
-
-    /**
-     * POST /auth/login
-     */
-    @PostMapping("/login")
-    public User login(@RequestParam String email,
-                      @RequestParam String password) {
-
-        User user = userService.findByEmail(email);
-
-        if (user == null || !user.getPassword().equals(password)) {
-            throw new UnauthorizedException("Invalid credentials");
-        }
-
-        return user;
-    }
+    User save(User user);
 }
