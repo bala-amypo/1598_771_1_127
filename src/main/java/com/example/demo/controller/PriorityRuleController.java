@@ -17,6 +17,6 @@ public class PriorityRuleController {
 
     @GetMapping("/all")
     public List<PriorityRule> getAllRules() {
-        return priorityRuleService.getAllRules();
+        return priorityRuleService.getActiveRules();
     }
 }
