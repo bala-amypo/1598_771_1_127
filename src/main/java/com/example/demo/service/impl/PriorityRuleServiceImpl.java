@@ -21,6 +21,7 @@ public class PriorityRuleServiceImpl implements PriorityRuleService {
 
         int score = 0;
 
+        // severity score
         switch (complaint.getSeverity()) {
             case LOW -> score += 10;
             case MEDIUM -> score += 20;
@@ -28,6 +29,7 @@ public class PriorityRuleServiceImpl implements PriorityRuleService {
             case CRITICAL -> score += 50;
         }
 
+        // urgency score
         switch (complaint.getUrgency()) {
             case LOW -> score += 5;
             case MEDIUM -> score += 10;
@@ -35,7 +37,7 @@ public class PriorityRuleServiceImpl implements PriorityRuleService {
             case IMMEDIATE -> score += 40;
         }
 
-        // add active rule weights
+        // active rule weights
         for (PriorityRule rule : priorityRuleRepository.findByActiveTrue()) {
             score += rule.getWeight();
         }
