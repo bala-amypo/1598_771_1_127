@@ -1,53 +1,56 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.*;
-import com.example.demo.service.*;
+import com.example.demo.entity.Complaint;
+import com.example.demo.entity.User;
+import com.example.demo.exception.ComplaintNotFoundException;
+import com.example.demo.repository.ComplaintRepository;
+import com.example.demo.service.ComplaintService;
+import com.example.demo.service.PriorityRuleService;
 import org.springframework.stereotype.Service;
-import com.example.demo.service.UserService;
-
 import java.util.List;
 
 @Service
 public class ComplaintServiceImpl implements ComplaintService {
 
-    private final ComplaintRepository complaintRepo;
-    private final PriorityRuleService priorityService;
-    private final UserService userService;
+    private final ComplaintRepository complaintRepository;
+    private final PriorityRuleService priorityRuleService;
 
-    public ComplaintServiceImpl(
-            ComplaintRepository complaintRepo,
-            PriorityRuleService priorityService,
-            UserService userService) {
-        this.complaintRepo = complaintRepo;
-        this.priorityService = priorityService;
-        this.userService = userService;
+    // Constructor injection ONLY
+    public ComplaintServiceImpl(ComplaintRepository complaintRepository,
+                                PriorityRuleService priorityRuleService) {
+        this.complaintRepository = complaintRepository;
+        this.priorityRuleService = priorityRuleService;
     }
 
-    public Complaint submitComplaint(String title, String desc, String category, Long userId) {
-        User user = userService.findById(userId);
+    @Override
+    public Complaint submitComplaint(Complaint complaint, User customer) {
 
-        Complaint c = new Complaint();
-        c.setTitle(title);
-        c.setDescription(desc);
-        c.setCategory(category);
-        c.setUser(user);
-        c.setPriorityScore(priorityService.calculatePriority(category));
+        complaint.setCustomer(customer);
 
-        return complaintRepo.save(c);
+        // compute priority score using PriorityRuleService
+        int score = priorityRuleService.computePriorityScore(complaint);
+        complaint.setPriorityScore(score);
+
+        return complaintRepository.save(complaint);
     }
 
-    public List<Complaint> getUserComplaints(Long userId) {
-        return complaintRepo.findByUserId(userId);
+    @Override
+    public List<Complaint> getComplaintsForUser(User customer) {
+        return complaintRepository.findByCustomer(customer);
     }
 
+    @Override
     public List<Complaint> getPrioritizedComplaints() {
-        return complaintRepo.findAllOrderByPriorityScoreDescCreatedAtAsc();
+        return complaintRepository.findAllOrderByPriorityScoreDescCreatedAtAsc();
     }
 
-    public void updateComplaintStatus(Long id, String status) {
-        Complaint c = complaintRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Complaint not found"));
+    @Override
+    public Complaint updateStatus(Long complaintId, Complaint.Status status) {
+        Complaint complaint = complaintRepository.findById(complaintId)
+                .orElseThrow(() ->
+                        new ComplaintNotFoundException("Complaint not found"));
+
+        complaint.setStatus(status);
+        return complaintRepository.save(complaint);
     }
 }
