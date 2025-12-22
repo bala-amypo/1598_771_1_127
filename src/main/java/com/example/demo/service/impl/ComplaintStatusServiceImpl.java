@@ -1,7 +1,11 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
+import com.example.demo.entity.Complaint;
+import com.example.demo.entity.ComplaintStatus;
+import com.example.demo.exception.ComplaintStatusNotFoundException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.ComplaintRepository;
+import com.example.demo.repository.ComplaintStatusRepository;
 import com.example.demo.service.ComplaintStatusService;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -9,27 +13,52 @@ import java.util.List;
 @Service
 public class ComplaintStatusServiceImpl implements ComplaintStatusService {
 
-    private final ComplaintStatusRepository statusRepo;
-    private final ComplaintRepository complaintRepo;
+    private final ComplaintStatusRepository statusRepository;
+    private final ComplaintRepository complaintRepository;
 
-    public ComplaintStatusServiceImpl(
-            ComplaintStatusRepository statusRepo,
-            ComplaintRepository complaintRepo) {
-        this.statusRepo = statusRepo;
-        this.complaintRepo = complaintRepo;
+    // Constructor injection (order matters)
+    public ComplaintStatusServiceImpl(ComplaintStatusRepository statusRepository,
+                                      ComplaintRepository complaintRepository) {
+        this.statusRepository = statusRepository;
+        this.complaintRepository = complaintRepository;
     }
 
+    @Override
     public void updateStatus(Long complaintId, String status) {
-        Complaint c = complaintRepo.findById(complaintId).orElseThrow();
 
-        ComplaintStatus cs = new ComplaintStatus();
-        cs.setComplaint(c);
-        cs.setStatus(status);
+        Complaint complaint = complaintRepository.findById(complaintId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Complaint not found"));
 
-        statusRepo.save(cs);
+        // update current complaint status
+        complaint.setStatus(
+                Complaint.Status.valueOf(status)
+        );
+        complaintRepository.save(complaint);
+
+        // save status history
+        ComplaintStatus complaintStatus = new ComplaintStatus();
+        complaintStatus.setComplaint(complaint);
+        complaintStatus.setStatus(status);
+
+        statusRepository.save(complaintStatus);
     }
 
+    @Override
     public List<ComplaintStatus> getStatusHistory(Long complaintId) {
-        return statusRepo.findByComplaintId(complaintId);
+
+        Complaint complaint = complaintRepository.findById(complaintId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Complaint not found"));
+
+        List<ComplaintStatus> history =
+                statusRepository.findByComplaint(complaint);
+
+        if (history.isEmpty()) {
+            throw new ComplaintStatusNotFoundException(
+                    "No status history found");
+        }
+
+        return history;
     }
 }
