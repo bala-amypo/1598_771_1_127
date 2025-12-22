@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Complaint;
 import com.example.demo.entity.User;
-import com.example.demo.exception.ComplaintNotFoundException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.service.ComplaintService;
 import com.example.demo.service.PriorityRuleService;

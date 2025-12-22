@@ -2,7 +2,6 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Complaint;
 import com.example.demo.entity.ComplaintStatus;
-import com.example.demo.exception.ComplaintStatusNotFoundException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.repository.ComplaintStatusRepository;
