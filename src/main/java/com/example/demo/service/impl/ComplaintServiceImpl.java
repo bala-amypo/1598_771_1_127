@@ -48,7 +48,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     public Complaint updateStatus(Long complaintId, Complaint.Status status) {
         Complaint complaint = complaintRepository.findById(complaintId)
                 .orElseThrow(() ->
-                        new ComplaintNotFoundException("Complaint not found"));
+                        new ResourceNotFoundException("Complaint not found"));
 
         complaint.setStatus(status);
         return complaintRepository.save(complaint);

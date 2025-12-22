@@ -55,7 +55,7 @@ public class ComplaintStatusServiceImpl implements ComplaintStatusService {
                 statusRepository.findByComplaint(complaint);
 
         if (history.isEmpty()) {
-            throw new ComplaintStatusNotFoundException(
+            throw new ResourceNotFoundException(
                     "No status history found");
         }
 
