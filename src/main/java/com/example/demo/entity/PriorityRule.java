@@ -9,48 +9,51 @@ public class PriorityRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String ruleName;
+    @Column(nullable = false)
+    private String category;
+
+    private Integer baseScore;
 
     private String description;
 
-    private Integer weight;
+    // Constructors
+    public PriorityRule() {}
 
-    private boolean active = true;
+    public PriorityRule(String category, Integer baseScore) {
+        this.category = category;
+        this.baseScore = baseScore;
+    }
 
-    // getters & setters
+    // Getters & Setters
     public Long getId() {
         return id;
     }
 
-    public String getRuleName() {
-        return ruleName;
+    public String getCategory() {
+        return category;
+    }
+
+    public Integer getBaseScore() {
+        return baseScore;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setBaseScore(Integer baseScore) {
+        this.baseScore = baseScore;
     }
 
     public String getDescription() {
         return description;
     }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setRuleName(String ruleName) {
-        this.ruleName = ruleName;
-    }
-
+    
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 }
