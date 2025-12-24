@@ -8,11 +8,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/status")
-public class ComplaintStatusController {
+public class StatusController {
 
     private final ComplaintStatusService complaintStatusService;
 
-    public ComplaintStatusController(ComplaintStatusService complaintStatusService) {
+    public StatusController(ComplaintStatusService complaintStatusService) {
         this.complaintStatusService = complaintStatusService;
     }
 
