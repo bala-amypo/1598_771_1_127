@@ -5,15 +5,16 @@ import com.example.demo.entity.ComplaintStatus;
 import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.repository.ComplaintStatusRepository;
 import com.example.demo.service.ComplaintStatusService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ComplaintStatusServiceImpl implements ComplaintStatusService {
 
     private final ComplaintStatusRepository complaintStatusRepository;
     private final ComplaintRepository complaintRepository;
 
-    // ✅ Constructor signature as per spec
     public ComplaintStatusServiceImpl(ComplaintStatusRepository complaintStatusRepository,
                                       ComplaintRepository complaintRepository) {
         this.complaintStatusRepository = complaintStatusRepository;
