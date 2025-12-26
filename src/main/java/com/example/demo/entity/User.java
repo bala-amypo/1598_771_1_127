@@ -3,49 +3,47 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
 public class User {
+
+    public enum Role {
+        CUSTOMER,
+        AGENT,
+        ADMIN
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String fullName;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String password;
 
-    private String role; // ✅ REQUIRED FOR SPRING SECURITY
-
-    // ===== Constructors =====
-    public User() {
-        this.role = "ROLE_USER";
-    }
-
-    public User(String name, String email, String password, String role) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.CUSTOMER;
 
     // ===== Getters & Setters =====
+
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -59,17 +57,16 @@ public class User {
     public String getPassword() {
         return password;
     }
-
+ 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    // ✅ REQUIRED METHOD
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
-
-    public void setRole(String role) {
+ 
+    public void setRole(Role role) {
         this.role = role;
     }
 }
