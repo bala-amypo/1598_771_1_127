@@ -6,15 +6,16 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.service.ComplaintService;
 import com.example.demo.service.PriorityRuleService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ComplaintServiceImpl implements ComplaintService {
 
     private final ComplaintRepository complaintRepository;
     private final PriorityRuleService priorityRuleService;
 
-    // ⚠️ EXACT constructor signature used in tests
     public ComplaintServiceImpl(ComplaintRepository complaintRepository,
                                 Object ignored1,
                                 Object ignored2,
