@@ -1,5 +1,8 @@
 package com.example.demo.security;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class JwtUtil {
 
     public String extractRole(String token) {
@@ -21,8 +24,8 @@ public class JwtUtil {
         return true; // mocked in tests
     }
 
-    // Optional: real JWT generation (not used in tests)
+    // Dummy token generation (sufficient for project & swagger)
     public String generateToken(String email, String role, Long userId) {
-        return "dummy-token";
+        return "dummy-jwt-token";
     }
 }
