@@ -9,4 +9,7 @@ public interface PriorityRuleService {
     PriorityRule createRule(PriorityRule rule);
 
     List<PriorityRule> getAllRules();
+
+    // ✅ ADD THIS (controller expects it)
+    List<PriorityRule> getActiveRules();
 }

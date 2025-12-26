@@ -25,4 +25,13 @@ public class PriorityRuleServiceImpl implements PriorityRuleService {
     public List<PriorityRule> getAllRules() {
         return priorityRuleRepository.findAll();
     }
+
+    // ✅ IMPLEMENTATION ADDED
+    @Override
+    public List<PriorityRule> getActiveRules() {
+        return priorityRuleRepository.findAll()
+                .stream()
+                .filter(PriorityRule::isActive)
+                .toList();
+    }
 }

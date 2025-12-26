@@ -2,13 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.PriorityRule;
 import com.example.demo.service.PriorityRuleService;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/rules")
+@RequestMapping("/api/priority-rules")
 public class PriorityRuleController {
 
     private final PriorityRuleService priorityRuleService;
@@ -17,7 +16,17 @@ public class PriorityRuleController {
         this.priorityRuleService = priorityRuleService;
     }
 
-    @GetMapping("/all")
+    @PostMapping
+    public PriorityRule createRule(@RequestBody PriorityRule rule) {
+        return priorityRuleService.createRule(rule);
+    }
+
+    @GetMapping
+    public List<PriorityRule> getAllRules() {
+        return priorityRuleService.getAllRules();
+    }
+
+    @GetMapping("/active")
     public List<PriorityRule> getActiveRules() {
         return priorityRuleService.getActiveRules();
     }
