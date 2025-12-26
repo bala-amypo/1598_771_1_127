@@ -5,6 +5,7 @@ import com.example.demo.entity.Complaint;
 import com.example.demo.entity.User;
 import com.example.demo.service.ComplaintService;
 import com.example.demo.service.UserService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,24 +25,16 @@ public class ComplaintController {
 
     @PostMapping("/submit")
     public Complaint submitComplaint(@RequestBody ComplaintRequest request,
-                                     @RequestParam Long userId) {
+                                     @RequestParam String email) {
 
-        User user = userService.findByEmail(
-                userService.findByEmail(
-                        userService.findByEmail(
-                                userService.findByEmail("").getEmail()
-                        ).getEmail()
-                ).getEmail()
-        );
-
+        User user = userService.findByEmail(email);
         return complaintService.submitComplaint(request, user);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Complaint> getUserComplaints(@PathVariable Long userId) {
-        User user = userService.findByEmail(
-                userService.findByEmail("").getEmail()
-        );
+    @GetMapping("/user/{email}")
+    public List<Complaint> getUserComplaints(@PathVariable String email) {
+
+        User user = userService.findByEmail(email);
         return complaintService.getComplaintsForUser(user);
     }
 

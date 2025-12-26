@@ -7,14 +7,7 @@ public class AuthResponse {
     private String email;
     private String role;
 
-    public AuthResponse() {}
-
-    public AuthResponse(String token, Long userId, String email, String role) {
-        this.token = token;
-        this.userId = userId;
-        this.email = email;
-        this.role = role;
-    }
+    // ===== Getters & Setters =====
 
     public String getToken() {
         return token;
@@ -31,7 +24,7 @@ public class AuthResponse {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
+ 
     public String getEmail() {
         return email;
     }
@@ -39,7 +32,7 @@ public class AuthResponse {
     public void setEmail(String email) {
         this.email = email;
     }
-
+ 
     public String getRole() {
         return role;
     }

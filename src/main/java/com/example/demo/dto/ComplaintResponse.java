@@ -1,51 +1,30 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.Complaint;
+
 public class ComplaintResponse {
 
-    private Long complaintId;
+    private Long id;
     private String status;
     private Integer priorityScore;
-    private String message;
 
-    public ComplaintResponse() {}
-
-    public ComplaintResponse(Long complaintId, String status,
-                             Integer priorityScore, String message) {
-        this.complaintId = complaintId;
-        this.status = status;
-        this.priorityScore = priorityScore;
-        this.message = message;
+    public ComplaintResponse(Complaint complaint) {
+        this.id = complaint.getId();
+        this.status = complaint.getStatus().name();
+        this.priorityScore = complaint.getPriorityScore();
     }
 
-    public Long getComplaintId() {
-        return complaintId;
-    }
+    // ===== Getters =====
 
-    public void setComplaintId(Long complaintId) {
-        this.complaintId = complaintId;
+    public Long getId() {
+        return id;
     }
 
     public String getStatus() {
         return status;
     }
- 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public Integer getPriorityScore() {
         return priorityScore;
-    }
- 
-    public void setPriorityScore(Integer priorityScore) {
-        this.priorityScore = priorityScore;
-    }
-
-    public String getMessage() {
-        return message;
-    }
- 
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

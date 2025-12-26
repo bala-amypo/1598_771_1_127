@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.PriorityRule;
 import com.example.demo.service.PriorityRuleService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class PriorityRuleController {
     }
 
     @GetMapping("/all")
-    public List<PriorityRule> getAllRules() {
+    public List<PriorityRule> getActiveRules() {
         return priorityRuleService.getActiveRules();
     }
 }
