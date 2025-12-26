@@ -10,18 +10,18 @@ import java.io.IOException;
 public class SimpleEchoServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        response.setContentType("text/plain");
-        response.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("text/plain");
+        resp.setStatus(HttpServletResponse.SC_OK);
 
-        String name = request.getParameter("name");
+        String name = req.getParameter("name");
 
         if (name == null || name.trim().isEmpty()) {
-            response.getWriter().write("Hello, Guest");
+            resp.getWriter().write("Hello, Guest");
         } else {
-            response.getWriter().write("Hello, " + name.trim());
+            resp.getWriter().write("Hello, " + name.trim());
         }
     }
 }

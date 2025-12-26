@@ -34,11 +34,16 @@ public class Complaint {
     private Long id;
 
     private String title;
+
     private String description;
+
     private String category;
+
     private String channel;
 
-    private Integer priorityScore = 0;
+    private Integer priorityScore;
+
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.NEW;
@@ -57,54 +62,112 @@ public class Complaint {
 
     @ManyToMany
     @JoinTable(
-        name = "complaint_priority_rules",
-        joinColumns = @JoinColumn(name = "complaint_id"),
-        inverseJoinColumns = @JoinColumn(name = "rule_id")
+            name = "complaint_priority_rules",
+            joinColumns = @JoinColumn(name = "complaint_id"),
+            inverseJoinColumns = @JoinColumn(name = "priority_rule_id")
     )
     private Set<PriorityRule> priorityRules = new HashSet<>();
 
-    private LocalDateTime createdAt;
-
     @PrePersist
-    public void onCreate() {
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // ===== getters & setters =====
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // ===== Getters & Setters =====
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public Long getId() {
+        return id;
+    }
+ 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getTitle() {
+        return title;
+    }
+ 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
+    public String getDescription() {
+        return description;
+    }
+ 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public String getChannel() { return channel; }
-    public void setChannel(String channel) { this.channel = channel; }
+    public String getCategory() {
+        return category;
+    }
+ 
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-    public Integer getPriorityScore() { return priorityScore; }
-    public void setPriorityScore(Integer priorityScore) { this.priorityScore = priorityScore; }
+    public String getChannel() {
+        return channel;
+    }
+ 
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
 
-    public Status getStatus() { return status; }
-    public void setStatus(Status status) { this.status = status; }
+    public Integer getPriorityScore() {
+        return priorityScore;
+    }
+ 
+    public void setPriorityScore(Integer priorityScore) {
+        this.priorityScore = priorityScore;
+    }
 
-    public Severity getSeverity() { return severity; }
-    public void setSeverity(Severity severity) { this.severity = severity; }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-    public Urgency getUrgency() { return urgency; }
-    public void setUrgency(Urgency urgency) { this.urgency = urgency; }
+    public Status getStatus() {
+        return status;
+    }
+ 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
-    public User getCustomer() { return customer; }
-    public void setCustomer(User customer) { this.customer = customer; }
+    public Severity getSeverity() {
+        return severity;
+    }
+ 
+    public void setSeverity(Severity severity) {
+        this.severity = severity;
+    }
 
-    public User getAssignedAgent() { return assignedAgent; }
-    public void setAssignedAgent(User assignedAgent) { this.assignedAgent = assignedAgent; }
+    public Urgency getUrgency() {
+        return urgency;
+    }
+ 
+    public void setUrgency(Urgency urgency) {
+        this.urgency = urgency;
+    }
 
-    public Set<PriorityRule> getPriorityRules() { return priorityRules; }
+    public User getCustomer() {
+        return customer;
+    }
+ 
+    public void setCustomer(User customer) {
+        this.customer = customer;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public User getAssignedAgent() {
+        return assignedAgent;
+    }
+ 
+    public void setAssignedAgent(User assignedAgent) {
+        this.assignedAgent = assignedAgent;
+    }
+
+    public Set<PriorityRule> getPriorityRules() {
+        return priorityRules;
+    }
 }
