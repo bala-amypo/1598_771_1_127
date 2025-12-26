@@ -7,7 +7,6 @@ import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.service.ComplaintService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,7 +29,6 @@ public class ComplaintServiceImpl implements ComplaintService {
         complaint.setSeverity(request.getSeverity());
         complaint.setUrgency(request.getUrgency());
         complaint.setCustomer(customer);
-        complaint.setCreatedAt(LocalDateTime.now());
 
         return complaintRepository.save(complaint);
     }
