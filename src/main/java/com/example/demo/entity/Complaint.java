@@ -1,0 +1,52 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+public class Complaint {
+
+    public enum Status { NEW, OPEN, IN_PROGRESS, RESOLVED }
+    public enum Severity { LOW, MEDIUM, HIGH, CRITICAL }
+    public enum Urgency { LOW, MEDIUM, HIGH, IMMEDIATE }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+    private String description;
+    private String category;
+    private String channel;
+
+    private Integer priorityScore = 0;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.NEW;
+
+    @Enumerated(EnumType.STRING)
+    private Severity severity;
+
+    @Enumerated(EnumType.STRING)
+    private Urgency urgency;
+
+    @ManyToOne
+    private User customer;
+
+    @ManyToOne
+    private User assignedAgent;
+
+    @ManyToMany
+    private Set<PriorityRule> priorityRules = new HashSet<>();
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    // getters and setters
+}
