@@ -17,8 +17,6 @@ public class ComplaintServiceImpl implements ComplaintService {
     private final PriorityRuleService priorityRuleService;
 
     public ComplaintServiceImpl(ComplaintRepository complaintRepository,
-                                Object ignored1,
-                                Object ignored2,
                                 PriorityRuleService priorityRuleService) {
         this.complaintRepository = complaintRepository;
         this.priorityRuleService = priorityRuleService;
