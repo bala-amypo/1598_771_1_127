@@ -6,13 +6,14 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import io.swagger.v3.oas.models.Components;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
 @Configuration
-public class OpenApiConfig {
+public class SwaggerConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -27,9 +28,12 @@ public class OpenApiConfig {
                         new Server().url("https://9122.pro604cr.amypo.ai"),
                         new Server().url("http://localhost:8080")
                 ))
-                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
-                .components(new Components()
-                        .addSecuritySchemes(securitySchemeName,
+                .addSecurityItem(
+                        new SecurityRequirement().addList(securitySchemeName)
+                )
+                .components(
+                        new Components().addSecuritySchemes(
+                                securitySchemeName,
                                 new SecurityScheme()
                                         .name(securitySchemeName)
                                         .type(SecurityScheme.Type.HTTP)
