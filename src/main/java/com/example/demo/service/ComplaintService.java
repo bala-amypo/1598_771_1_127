@@ -10,7 +10,7 @@ public interface ComplaintService {
 
     Complaint submitComplaint(ComplaintRequest request, User customer);
 
-    List<Complaint> getComplaintsForUser(User customer);
+    List<Complaint> getComplaintsByCustomer(User customer);
 
-    List<Complaint> getPrioritizedComplaints();
+    List<Complaint> getAllComplaints();
 }
