@@ -17,12 +17,19 @@ public class PriorityRuleServiceImpl implements PriorityRuleService {
         this.priorityRuleRepository = priorityRuleRepository;
     }
 
+    // ✅ REQUIRED by PriorityRuleService
+    @Override
+    public List<PriorityRule> getActiveRules() {
+        return priorityRuleRepository.findByActiveTrue();
+    }
+
+    // ✅ Used by ComplaintService
     @Override
     public int computePriorityScore(Complaint complaint) {
 
         int score = 0;
 
-        List<PriorityRule> rules = priorityRuleRepository.findByActiveTrue();
+        List<PriorityRule> rules = getActiveRules();
 
         for (PriorityRule rule : rules) {
             score += rule.getWeight();
