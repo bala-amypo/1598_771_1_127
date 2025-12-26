@@ -7,7 +7,6 @@ import com.example.demo.service.ComplaintService;
 import com.example.demo.service.PriorityRuleService;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -16,7 +15,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     private final ComplaintRepository complaintRepository;
     private final PriorityRuleService priorityRuleService;
 
-    // ✅ Constructor EXACTLY as tests expect
+    // ✅ DO NOT ADD EXTRA PARAMETERS
     public ComplaintServiceImpl(
             ComplaintRepository complaintRepository,
             PriorityRuleService priorityRuleService
@@ -32,17 +31,6 @@ public class ComplaintServiceImpl implements ComplaintService {
         return complaintRepository.save(complaint);
     }
 
-    // ✅ REQUIRED BY INTERFACE + TESTS
-    @Override
-    public List<Complaint> getPrioritizedComplaints() {
-        List<Complaint> complaints = complaintRepository.findAll();
-        complaints.sort(
-                Comparator.comparingInt(Complaint::getPriorityScore).reversed()
-        );
-        return complaints;
-    }
-
-    // 🔒 Internal helper (NO @Override here)
     private int calculatePriorityScore() {
         int score = 0;
         List<PriorityRule> rules = priorityRuleService.getActiveRules();

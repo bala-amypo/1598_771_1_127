@@ -7,9 +7,5 @@ import java.util.List;
 
 public interface PriorityRuleRepository extends JpaRepository<PriorityRule, Long> {
 
-    // ✅ REQUIRED by service & tests
     List<PriorityRule> findByActiveTrue();
-
-    // ❌ REMOVE if present
-    // Optional<PriorityRule> findByCategory(String category);
 }
