@@ -44,7 +44,8 @@ public class AuthController {
         response.setEmail(user.getEmail());
         response.setUserId(user.getId());
         response.setRole(user.getRole().name());
-        response.setToken("dummy-token");
+        String token = jwtUtil.generateToken(user.getEmail());
+response.setToken(token);
 
         return ResponseEntity.ok(response);
     }
