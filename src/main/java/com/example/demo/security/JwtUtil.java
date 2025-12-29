@@ -10,7 +10,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "secretkey123456";
+    private static final String SECRET_KEY = "secretkey123456fgfjglrindflgbmldfgkjrdifhgblkfjgdfkjldfvingfkj";
 
     // ✅ REQUIRED: used by AuthController
     public String generateToken(String email) {
