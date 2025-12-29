@@ -48,8 +48,9 @@ public class Complaint {
     @ManyToOne
     private User assignedAgent;
 
-    @ManyToMany
-    private Set<PriorityRule> priorityRules = new HashSet<>();
+    @JsonIgnore
+@OneToMany(fetch = FetchType.LAZY)
+private List<PriorityRule> priorityRules;
 
     @PrePersist
     void onCreate() {
