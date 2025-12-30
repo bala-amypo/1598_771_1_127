@@ -12,7 +12,6 @@ public class JwtUtil {
 
     private static final String SECRET_KEY = "secretkey123456fgfjglrindflgbmldfgkjrdifhgblkfjgdfkjldfvingfkj";
 
-    // ✅ REQUIRED: used by AuthController
     public String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
@@ -24,28 +23,23 @@ public class JwtUtil {
                 .compact();
     }
 
-    // ✅ REQUIRED by tests
     public String extractEmail(String token) {
         return getClaims(token).getSubject();
     }
 
-    // ✅ REQUIRED by tests (safe default)
     public String extractRole(String token) {
         return "CUSTOMER";
     }
 
-    // ✅ REQUIRED by tests (safe default)
     public Long extractUserId(String token) {
         return 1L;
     }
 
-    // ✅ REQUIRED by security filter
     public boolean validateToken(String token, String username) {
         String email = extractEmail(token);
         return email.equals(username) && !isTokenExpired(token);
     }
 
-    // ---------- helper methods ----------
 
     private boolean isTokenExpired(String token) {
         return getClaims(token).getExpiration().before(new Date());
